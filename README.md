@@ -1,9 +1,9 @@
 # NoahPi
 
 ```
-wget https://repo.anaconda.com/archive/Anaconda3-2023.07-1-Linux-aarch64.sh
+wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh
 ```
 
 ```
-bash Anaconda3-2023.07-1-Linux-aarch64.sh
+bash Miniforge3-Linux-aarch64.sh
 ```
