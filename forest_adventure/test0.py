@@ -22,6 +22,20 @@ SCREEN_TITLE = "Ghosts!"
 
 MOVEMENT_SPEED = 5
 
+class Tree(arcade.Sprite):
+
+    def __init__(self):
+        super().__init__()
+        self.sprite_sheet = "sprites/nature.png"
+        self.sheet_x = 12
+        self.sheet_y = 10
+        self.texture = arcade.load_texture(self.sprite_sheet,
+                                               x = self.sheet_x*16,
+                                               y = self.sheet_y*16,
+                                               width=16,
+                                               height=16)
+        self.scale = 2.0
+
 class Spirit(arcade.Sprite):
 
     def __init__(self):
@@ -104,8 +118,8 @@ class Player(arcade.Sprite):
                                                width=16,
                                                height=16)
         self.scale = 2.0
-        self.sound = arcade.Sound("sprites/castle.wav")
-        self.sound.play(speed=1.0, volume=0.25)
+        #self.sound = arcade.Sound("sprites/castle.wav")
+        #self.sound.play(speed=1.0, volume=0.25)
 
         self.SOUTH = 0
         self.NORTH = 1
@@ -201,7 +215,9 @@ class MyGame(arcade.Window):
         # Set up the player info
         self.player_sprite = None
         self.spirit_list = None
+        self.tree_list = None
         self.spirit_count = 5
+        self.tree_count = 5
 
         # Set the background color
         arcade.set_background_color(arcade.color.SKY_BLUE)
@@ -212,6 +228,7 @@ class MyGame(arcade.Window):
         # Sprite lists
         self.player_list = arcade.SpriteList()
         self.spirit_list = arcade.SpriteList()
+        self.tree_list = arcade.SpriteList()
 
         # Set up the player
         self.player_sprite = Player()
@@ -225,6 +242,12 @@ class MyGame(arcade.Window):
             spirit.center_y = random.randrange(SCREEN_HEIGHT)
             self.spirit_list.append(spirit)
 
+        for i in range(self.tree_count):
+            tree = Tree()
+            tree.center_x = random.randrange(SCREEN_WIDTH)
+            tree.center_y = random.randrange(SCREEN_HEIGHT)
+            self.tree_list.append(tree)
+
     def on_draw(self):
         """
         Render the screen.
@@ -236,6 +259,7 @@ class MyGame(arcade.Window):
         # Draw all the sprites.
         self.player_list.draw()
         self.spirit_list.draw()
+        self.tree_list.draw()
 
     def on_update(self, delta_time):
         """ Movement and game logic """
@@ -246,6 +270,9 @@ class MyGame(arcade.Window):
         # Move the player
 
         self.player_list.update()
+
+        hit_list = arcade.check_for_collision_with_list(self.player_list[0], self.spirit_list)
+        print(hit_list)
 
 
 
